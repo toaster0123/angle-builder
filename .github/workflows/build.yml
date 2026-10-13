@@ -2,7 +2,7 @@ name: angle-natives-build
 
 on:
   push:
-    branches: [master]
+    branches: [master, linux-hdr-validation-20261012]
   pull_request:
     branches: [master]
   workflow_dispatch:
@@ -111,6 +111,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Test Windows SDK installer control flow
+        shell: pwsh
+        run: ./tests/test-windows-sdk.ps1
+
+      - name: Install pinned Windows SDK
+        shell: pwsh
+        run: ./scripts/install-windows-sdk.ps1
 
       - name: Build Windows artifacts
         shell: pwsh
